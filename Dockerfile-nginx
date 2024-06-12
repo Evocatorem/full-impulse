@@ -1,0 +1,8 @@
+FROM nginx
+ADD ./warp/res/nginx.conf /etc/nginx/conf.d/default.conf
+# Due to not working depends_on on ECS need to setup timeout on nginx
+RUN echo "#!/bin/sh" > /docker-entrypoint.d/sleep.sh && \
+    echo "################Sleep start##############" >> /docker-entrypoint.d/sleep.sh && \
+    echo "sleep 30" >> /docker-entrypoint.d/sleep.sh && \
+    echo "################Sleep over#############" >> /docker-entrypoint.d/sleep.sh && \
+    chmod +x /docker-entrypoint.d/sleep.sh
